@@ -1,0 +1,33 @@
+
+    <link rel="stylesheet" href="lungo.css">
+    <link rel="stylesheet" href="lungo.icon.css">
+    <link rel="stylesheet" href="lungo.theme.css">
+    <script src="jquery.min.js"></script>
+    <script src="quo.js"></script>
+    <script src="lungo.js"></script>
+    <script src="paias.js"></script>
+
+
+<section id="main_section">
+    <header data-title="Praias"></header>
+    <article id="main-article" class="active list scroll">
+        <div class="form">
+        <fieldset data-icon="search"><span class="icon search"></span>
+                <input type="search" placeholder="Search...">
+        </fieldset>
+        </div>
+        <div id="praiaslista"></div>
+    </article>
+</section>
+    
+<script>
+    Lungo.init({
+        name: 'Praias',
+    });
+    $.each(praias, function(i, item) {
+        $('#praiaslista').append('<li class="arrow"><strong>'+item.praia+'</strong><small>'+item.cidade+'</small></li>')
+    });
+    
+</script>
+
+
