@@ -1,33 +1,120 @@
-
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
     <link rel="stylesheet" href="lungo.css">
     <link rel="stylesheet" href="lungo.icon.css">
     <link rel="stylesheet" href="lungo.theme.css">
-    <script src="jquery.min.js"></script>
     <script src="quo.js"></script>
     <script src="lungo.js"></script>
     <script src="paias.js"></script>
+    <script src="jquery.min.js"></script>
 
+</head>
 
-<section id="main_section">
-    <header data-title="Praias"></header>
+<body>
+    
+<section id="main" data-aside="right">
+    <header data-title="Praias">
+        <nav>
+            <button data-view-aside="right" data-icon="menu"></button>
+        </nav>
+    </header>
     <article id="main-article" class="active list scroll">
         <div class="form">
-        <fieldset data-icon="search"><span class="icon search"></span>
-                <input type="search" placeholder="Search...">
+        <fieldset>
+                <input type="search" id="search" placeholder="Pesquisar...">
         </fieldset>
         </div>
         <div id="praiaslista"></div>
     </article>
 </section>
     
+    
+<section id="praia">
+     <header data-back="home" data-title="Praias"></header>
+     <article id="praia" class="">
+        <div class="empty">
+            <span class=""></span>
+            <strong><div id="praianome"></div></strong>
+            <small><div id="praialocal"></div></small>
+            <div id="aviso"></div>
+        </div>
+    </article>
+</section>
+    
 <script>
-    Lungo.init({
-        name: 'Praias',
-    });
+    
+    
+    
     $.each(praias, function(i, item) {
-        $('#praiaslista').append('<li class="arrow"><strong>'+item.praia+'</strong><small>'+item.cidade+'</small></li>')
+        $('#praiaslista').append('<li class="arrow" idpraia="'+item.id+'"><strong>'+item.praia+'</strong><small>'+item.cidade+'</small></li>')
     });
+    
+    $( "li" ).each(function() {
+      $(this).click(function() {
+          idp = $(this).attr('idpraia');
+          $.post("http://pixel.capella.pro/cetesb/info.php", { id: idp })
+            .done(function(data) {
+                showpraia(idp, data);
+                console.log(idp);
+          });
+      });
+    });
+ 
+    function showpraia(idpraias, status){
+        Lungo.Router.article("praia", "praia");
+        var result = $.grep(praias, function(e){ return e.id == idpraias; });
+        console.log(result);
+        console.log(idpraias);
+        
+        $('#praianome').html(result[0].praia);
+        
+        if(status == 1){
+         $('#aviso').html('<button class="anchor" data-label="Please update..."></button>');
+        } else {
+         $('#aviso').html('<button class="anchor" data-label="Please update..."></button>');
+        }
+    }
+    
+
+    
+    
+    
+    
+    
+    
+    
+  jQuery.expr[':'].Contains = function(a,i,m){
+      return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase())>=0;
+  };
+
+
+
+
+    $( "#search" )
+      .change( function () {
+        var filter = $(this).val();
+          console.log(filter);
+        if(filter) {
+          // this finds all links in a list that contain the input,
+          // and hide the ones not containing the input while showing the ones that do
+          $("#praiaslista").find(":not(:Contains(" + filter + "))").parent().hide();
+          $("#praiaslista").find(":Contains(" + filter + ")").parent().show();
+        } else {
+          $("#praiaslista").find("li").slideDown();
+        }
+        return false;
+      })
+    .keyup( function () {
+        // fire the above change event after every letter
+        $(this).change();
+    });
+
+
+Lungo.init({});
     
 </script>
 
-
+</body>
+</html>
