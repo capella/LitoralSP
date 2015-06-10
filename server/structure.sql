@@ -103,7 +103,7 @@ CREATE TABLE `status` (
 --
 DROP TABLE IF EXISTS `praias_status`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `praias_status` AS select `t3`.`name` AS `name`,`t3`.`local` AS `local`,`t3`.`municipioid` AS `municipioid`,`t1`.`addtime` AS `addtime`,`t1`.`status` AS `status` from (`status` `t1` join `praias` `t3` on((`t3`.`id` = `t1`.`praiaid`))) where (`t1`.`addtime` = (select max(`t2`.`addtime`) from `status` `t2` where (`t2`.`praiaid` = `t1`.`praiaid`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `praias_status` AS select `t3`.`name` AS `name`,`t3`.`local` AS `local`,`t3`.`municipioid` AS `municipioid`,`t1`.`addtime` AS `addtime`,`t1`.`status` AS `status` from (`status` `t1` join `praias` `t3` on((`t3`.`id` = `t1`.`praiaid`))) where (`t1`.`addtime` = (select max(`t2`.`addtime`) from `status` `t2` where (`t2`.`praiaid` = `t1`.`praiaid`))) order by `t3`.`name` asc;
 
 --
 -- Indexes for dumped tables

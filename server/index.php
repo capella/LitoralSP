@@ -1,5 +1,8 @@
 <?php
 error_reporting(E_ALL);
+ini_set( 'default_charset', 'UTF-8' );
+header('Content-Type: text/html; charset=UTF-8');
+
 require_once __DIR__.'/vendor/autoload.php'; 
 
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +34,7 @@ $app->get('/', function ()  use ($app) {
 	$output = "";
 
 	$html = HtmlDomParser::file_get_html('http://www.cetesb.sp.gov.br/qualidade-da-praia');
-	
+
 	foreach($html->find('table') as $table) {
 		foreach($table->find('tr') as $tr) {
 			if($tr->find('td',0)->plaintext!='Praia'){
@@ -48,7 +51,7 @@ $app->get('/', function ()  use ($app) {
 
 				// Parece idiota, mas formatando e desformatando, acaba-se com
 				// os erros de formatação
-				$cidade = limpa(htmlentities($table->prev_sibling()->plaintext));
+				$cidade = limpa(htmlentities($table->prev_sibling()->plaintext, ENT_QUOTES, "UTF-8"));
 
 				$sql = "
 					SET @praia=?; 
@@ -77,7 +80,7 @@ $app->run();
 function limpa($txt){
 	$txt = str_replace("&nbsp;", '', $txt);
 	$txt = ucwords(strtolower($txt));
-	$txt = html_entity_decode($txt);
+	$txt = html_entity_decode($txt, ENT_QUOTES, "UTF-8");
 	$txt = str_replace(" De ", ' de ', $txt);
 	$txt = str_replace(" Da ", ' da ', $txt);
 	$txt = str_replace(" Do ", ' do ', $txt);
