@@ -5,3 +5,4 @@ plugins/
 particular/
 server/config.ini
 config.ini
+server/vendor/

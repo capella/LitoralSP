@@ -1,13 +1,14 @@
 {
   "name": "litoralsp",
   "version": "1.0.0",
-  "description": "LitoralSP: An Ionic project",
+  "description": "LitoralSP",
   "dependencies": {
     "gulp": "^3.5.6",
-    "gulp-sass": "^1.3.3",
     "gulp-concat": "^2.2.0",
     "gulp-minify-css": "^0.3.0",
-    "gulp-rename": "^1.2.0"
+    "gulp-rename": "^1.2.0",
+    "gulp-sass": "^1.3.3",
+    "ini": "^1.3.4"
   },
   "devDependencies": {
     "bower": "^1.3.3",
@@ -22,6 +23,6 @@
     "com.ionic.keyboard"
   ],
   "cordovaPlatforms": [
-    "ios"
+    "android"
   ]
 }
