@@ -67,6 +67,10 @@ $app->get('/', function ()  use ($app) {
     return $output;
 });
 
+$app->after(function (Request $request, Response $response) {
+    $response->headers->set('Access-Control-Allow-Origin', '*');
+});
+
 $app->run();
 
 // FUNCOES
