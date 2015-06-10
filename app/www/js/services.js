@@ -1,50 +1,41 @@
 angular.module('starter.services', [])
 
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
-
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460'
-  },{
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'https://pbs.twimg.com/profile_images/479090794058379264/84TKj_qa.jpeg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'https://pbs.twimg.com/profile_images/598205061232103424/3j5HUXMY.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'https://pbs.twimg.com/profile_images/578237281384841216/R3ae1n61.png'
-  }];
-
+.factory('Data', function($http, $ionicLoading) {
+  var praias = [];
+  var municipios = [];
   return {
-    all: function() {
-      return chats;
+    update: function(callback){
+      $http.get('http://'+server_url+'/praias.json').then(function(resp) {
+        municipios = resp.data.municipios;
+        praias = resp.data.praias;
+        callback();
+      }, function(err) {
+        console.error('ERR', err);
+          $scope.show = function() {
+            $ionicLoading.show({
+              template: 'Verifique a sua internet.',
+              duration: 1200
+            });
+          };
+      })
     },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
+    praias: function(id){
+      var praias_id = [];
+      angular.forEach(praias, function(value, key) {
+        if (value.municipioid == id) {
+          praias_id.push(value);
         }
-      }
-      return null;
+      });
+      return praias_id;
+    },
+    municipios: function(){
+      return municipios;
+    },
+    last: function(){
+      if (typeof praias[0] !== 'undefined')
+        return praias[0].addtime;
+      else 
+        return 0;
     }
   };
 });

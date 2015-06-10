@@ -1,0 +1,18 @@
+<ion-view view-title="Praias">
+  <ion-content>
+    <ion-list>
+      <ion-item class="item item-icon-right" ng-repeat="praia in praias">
+        <h2>{{praia.name}}</h2>
+
+        <p>Local de análise: {{praia.local}}</p>
+        <p style="color: #ef473a;" ng-show="{{praia.status}}">Praia imprópria para banho.</p>
+
+        <i class="icon ion-checkmark-circled balanced" ng-hide="{{praia.status}}"></i>
+
+        <i class="icon ion-alert-circled assertive" ng-show="{{praia.status}}"></i>
+
+
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,20 @@
+<ion-view view-title="Informações">
+  <ion-content class="padding">
+    <div class="list card">
+      <div class="item item-divider">Sobre os Dados</div>
+      <div class="item item-body">
+        <div>
+          Esse aplicativo realiza consultas diárias ao "Boletim Semanal - Qualidade das Praias" no próprio site da CETESB. Os dados são atualizados 4 vezes ao dia.
+        </div>
+      </div>
+    </div>
+    <div class="list card" ng-show="addtime">
+      <div class="item item-divider">Última Atualização</div>
+      <div class="item item-body">
+        <div>
+          {{addtime}}
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

@@ -41,6 +41,7 @@ if (rootdir) {
 
       if(fs.existsSync(indexPath)) {
         replace_string_in_file(indexPath, "api.example.com", config.url);
+        replace_string_in_file(indexPath, "localhost", config.url);
       }
 
     } catch(e) {
